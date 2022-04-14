@@ -6,18 +6,24 @@ const logger = require('morgan');
 const bodyParser = require('body-parser')
 const db = require('./models')
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+
 const connectDB = require('./config/connectDB')
 const jwt = require('jsonwebtoken')
 
 const app = express();
+var port = process.env.PORT || 6969
 
+app.listen(port,function() {
+  console.log('example app listenning on port ' + port + '!');
+});
 // for parsing application/json
 app.use(bodyParser.json());
 
 // for parsing application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const usersRouter = require('./routes/users');
+app.use('/users', usersRouter);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
